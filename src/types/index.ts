@@ -19,3 +19,11 @@ export interface FeedbackEntry {
   timestamp: number;
   address?: string;
 }
+
+export interface TransactionRecord {
+  hash: string;
+  amount: number;
+  status: "confirmed" | "failed";
+  timestamp: number;
+  error?: string;
+}
