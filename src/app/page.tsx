@@ -116,8 +116,14 @@ export default function Home() {
           />
         </div>
       ) : (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center text-sm text-red-700">
-          Failed to load campaign data. Please refresh.
+        <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
+          <p className="mb-3 text-sm font-medium text-red-700">Failed to load campaign data</p>
+          <button
+            onClick={refreshCampaign}
+            className="rounded-lg bg-red-600 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-red-700"
+          >
+            Retry
+          </button>
         </div>
       )}
 
