@@ -2,7 +2,7 @@
 
 Production-ready Soroban crowdfunding dApp on Stellar Testnet with comprehensive analytics, error monitoring, a mobile-first responsive UI, and a user feedback framework.
 
-- **Live Demo:** PENDING_DEPLOYMENT
+- **Live Demo:** https://stellar-green-belt-mvp.vercel.app/
 - **Smart Contract (Testnet):** `CCLJ4FEXKXEZKS6UCROBEKLIVDOPFVP6Z75QS3AV5CUS2WAM3EBQNL7W`
 - **Stack:** Soroban (Rust), Next.js 16, Tailwind CSS 4, Stellar Wallets Kit
 - **Wallets:** Freighter, xBull, Albedo
