@@ -10,6 +10,8 @@ import TransactionAlert from "@/components/TransactionAlert";
 import OnboardingModal from "@/components/OnboardingModal";
 import FeedbackWidget from "@/components/FeedbackWidget";
 import CampaignSkeleton from "@/components/CampaignSkeleton";
+import TransactionHistory from "@/components/TransactionHistory";
+import ErrorBanner from "@/components/ErrorBanner";
 
 export default function Home() {
   const {
@@ -25,6 +27,7 @@ export default function Home() {
     resetTx,
     showOnboarding,
     dismissOnboarding,
+    txRecords,
   } = useCrowdfund();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -102,6 +105,11 @@ export default function Home() {
             <CountdownTimer deadlineTimestamp={campaign.deadlineTimestamp} />
           </div>
 
+          <ErrorBanner
+            message={txState.status === "failure" ? txState.error : null}
+            onDismiss={resetTx}
+          />
+
           <ContributeForm
             txStatus={txState.status}
             onContribute={contribute}
@@ -114,6 +122,8 @@ export default function Home() {
             explorerUrl={explorerUrl}
             onDismiss={resetTx}
           />
+
+          <TransactionHistory records={txRecords} />
         </div>
       ) : (
         <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
