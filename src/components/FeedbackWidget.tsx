@@ -22,6 +22,7 @@ function saveFeedback(entries: FeedbackEntry[]) {
 export default function FeedbackWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(0);
+  const [feedbackCount, setFeedbackCount] = useState(loadFeedback().length);
   const [comment, setComment] = useState("");
   const [hovered, setHovered] = useState(0);
   const [submitted, setSubmitted] = useState(false);
@@ -38,6 +39,7 @@ export default function FeedbackWidget() {
     const entries = loadFeedback();
     entries.push(entry);
     saveFeedback(entries);
+    setFeedbackCount(entries.length);
 
     trackEvent("Feedback Submitted", { rating, commentLength: comment.length });
 
@@ -58,6 +60,11 @@ export default function FeedbackWidget() {
         className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg transition-colors hover:bg-indigo-700 active:scale-95"
         aria-label="Open feedback form"
       >
+        {feedbackCount > 0 && (
+          <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 text-[10px] font-bold text-white">
+            {feedbackCount}
+          </span>
+        )}
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
         </svg>
