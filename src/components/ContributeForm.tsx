@@ -18,15 +18,21 @@ const STATUS_LABELS: Record<TxStatus, string | null> = {
 
 export default function ContributeForm({ txStatus, onContribute }: ContributeFormProps) {
   const [amount, setAmount] = useState("");
-  const isPending = txStatus === "awaiting_approval" || txStatus === "validating";
+  const [submitting, setSubmitting] = useState(false);
+  const isPending = txStatus === "awaiting_approval" || txStatus === "validating" || submitting;
   const statusLabel = STATUS_LABELS[txStatus];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = parseInt(amount, 10);
-    if (isNaN(parsed) || parsed <= 0) return;
-    await onContribute(parsed);
-    setAmount("");
+    if (isNaN(parsed) || parsed <= 0 || submitting) return;
+    setSubmitting(true);
+    try {
+      await onContribute(parsed);
+      setAmount("");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
