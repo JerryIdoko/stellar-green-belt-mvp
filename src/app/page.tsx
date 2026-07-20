@@ -9,6 +9,7 @@ import ContributeForm from "@/components/ContributeForm";
 import TransactionAlert from "@/components/TransactionAlert";
 import OnboardingModal from "@/components/OnboardingModal";
 import FeedbackWidget from "@/components/FeedbackWidget";
+import CampaignSkeleton from "@/components/CampaignSkeleton";
 
 export default function Home() {
   const {
@@ -84,13 +85,7 @@ export default function Home() {
           </p>
         </div>
       ) : campaignLoading ? (
-        <div className="flex flex-col items-center py-16 sm:py-20">
-          <svg className="mb-4 h-8 w-8 animate-spin text-indigo-600" viewBox="0 0 24 24" fill="none">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-          </svg>
-          <p className="text-sm text-gray-500">Loading campaign data...</p>
-        </div>
+        <CampaignSkeleton />
       ) : campaign ? (
         <div className="space-y-4 sm:space-y-6">
           <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
