@@ -79,3 +79,30 @@ Open [http://localhost:3000](http://localhost:3000).
 npm run build    # next build
 npm run lint     # eslint
 ```
+
+---
+
+## 📊 Level 5 User Growth & Feedback Analytics
+
+- **Exhaustive User Feedback Registry (Excel Log):** [Link/View Deployed Feedback Sheet](./delivery_assets/user_feedback_responses.xlsx)
+- **Live User Feedback Widget:** Embedded as a floating action button (bottom-right) with star rating + free-text commentary, persisted to localStorage.
+- **Analytics Events:** Wallet Connected, Transaction Initialized, Transaction Success, Transaction Failure, Feedback Submitted (PostHog-ready).
+
+### User Feedback Iteration Summary
+
+| User Requested Improvement | Implemented Solution | Git Commit Reference Link |
+|---|---|---|
+| Add transaction status indicators | Multi-state tracking (`awaiting_approval` → `validating` → `success`/`failure`) with contextual icons and colors | [`4039e78`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/4039e78) |
+| Show transaction history with filtering | `TransactionHistory` component with sort-by-date/amount, status filter, and CSV data export | [`4039e78`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/4039e78) |
+| Better error messages when transactions fail | `ErrorBanner` with tiered icons (⚠️ WalletNotFound, ↩️ UserRejected, 💰 InsufficientFunds) and contextual colors | [`9b0ba15`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/9b0ba15) |
+| Prevent accidental double-submits | `submitting` guard flag disables the Contribute button until the current transaction resolves | [`87439b9`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/87439b9) |
+| Visual loading state while fetching campaign data | `CampaignSkeleton` pulse-animated placeholders for progress bar, timer, and form | [`e09f452`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/e09f452) |
+| Retry button when data fetch fails | "Retry" button shown in the fetch-failure state that calls `refreshCampaign()` | [`40c9a98`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/40c9a98) |
+
+---
+
+## 📋 Pitch Assets
+
+- **Live Production Application URL:** https://stellar-green-belt-mvp.vercel.app/
+- **Professional Pitch Deck Presentation Link (PPT/Google Slides):** `PENDING_PITCH_DECK`
+- **Full End-to-End Product Walkthrough Demo Video (1-Minute):** `PENDING_DEMO_VIDEO`
