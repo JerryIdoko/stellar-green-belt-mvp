@@ -4,6 +4,7 @@ Production-ready Soroban crowdfunding dApp on Stellar Testnet with comprehensive
 
 - **Live Demo:** https://stellar-green-belt-mvp.vercel.app/
 - **Smart Contract (Testnet):** `CCLJ4FEXKXEZKS6UCROBEKLIVDOPFVP6Z75QS3AV5CUS2WAM3EBQNL7W`
+- **Stellar.Expert Verified Mainnet Contract Profile:** [View Live Mainnet Ledger History](https://stellar.expert/explorer/public/contract/YOUR_MAINNET_CONTRACT_ID)
 - **Stack:** Soroban (Rust), Next.js 16, Tailwind CSS 4, Stellar Wallets Kit
 - **Wallets:** Freighter, xBull, Albedo
 
@@ -72,6 +73,10 @@ Open [http://localhost:3000](http://localhost:3000).
 | `NEXT_PUBLIC_RPC_URL` | `https://soroban-testnet.stellar.org` | Soroban RPC endpoint |
 | `NEXT_PUBLIC_CONTRACT_ID` | Embded in client bindings | Contract ID override |
 | `NEXT_PUBLIC_POSTHOG_KEY` | (none) | PostHog project API key |
+| `NEXT_PUBLIC_NETWORK` | `testnet` | Network mode (`testnet` / `mainnet`) |
+| `NEXT_PUBLIC_MAINNET_RPC_URL` | (none) | Soroban RPC for Mainnet |
+| `NEXT_PUBLIC_MAINNET_CONTRACT_ID` | (none) | Contract ID for Mainnet |
+| `NEXT_PUBLIC_SPONSOR_SECRET_KEY` | (none) | Fee bump sponsor secret (server-only) |
 
 ## Build
 
@@ -98,6 +103,54 @@ npm run lint     # eslint
 | Prevent accidental double-submits | `submitting` guard flag disables the Contribute button until the current transaction resolves | [`87439b9`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/87439b9) |
 | Visual loading state while fetching campaign data | `CampaignSkeleton` pulse-animated placeholders for progress bar, timer, and form | [`e09f452`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/e09f452) |
 | Retry button when data fetch fails | "Retry" button shown in the fetch-failure state that calls `refreshCampaign()` | [`40c9a98`](https://github.com/JerryIdoko/stellar-green-belt-mvp/commit/40c9a98) |
+
+---
+
+## 🏆 Level 6 Black Belt Production MVP
+
+A fully optimized, production-grade application deployed directly onto the **Stellar Mainnet**. This decentralized product features a robust smart contract backend, structural multi-wallet coordination, a high-performance local caching engine, and advanced transactional optimizations designed for real-world usability and ecosystem scalability.
+
+### 🚀 Live Production Implementations
+
+#### 🔗 Public Architecture Profiles
+- **Live Production Application URL:** https://stellar-green-belt-mvp.vercel.app/
+- **Mainnet Smart Contract ID:** `[PASTE_YOUR_MAINNET_C..._CONTRACT_ID_HERE]`
+- **Stellar.Expert Verified Mainnet Contract Profile:** [View Live Mainnet Ledger History](https://stellar.expert/explorer/public/contract/YOUR_MAINNET_CONTRACT_ID)
+
+#### 📣 Ecosystem Presence & Content Triggers
+- **Twitter/X Production Launch Thread:** `[PASTE_YOUR_X_LAUNCH_POST_LINK_HERE]`
+- **Comprehensive End-to-End Walkthrough Video:** `[PASTE_YOUR_1_MINUTE_DEMO_VIDEO_LINK_HERE]`
+- **Ecosystem Contribution Reference (Tutorial/Technical Blog):** `[PASTE_YOUR_DEV_TO_OR_MEDIUM_LINK_HERE]`
+
+### 🛠️ Advanced Technical Standards & Features
+
+#### ⚡ Advanced Feature: Fee Sponsorship (Gasless Transaction Fee Bumps)
+To eliminate friction during user onboarding, this production MVP implements **Stellar Fee Sponsorship**.
+- The client application builds and signs the core Soroban operation invocation payload.
+- Our specialized backend wrapper intercepts the payload and encapsulates the transaction within an outer **Fee Bump Transaction Envelope**.
+- The operational account sponsors the network gas fees (Stroops) directly, enabling a completely seamless, Web2-like interaction experience where end-users do not need native XLM balances to interact with our smart contract.
+
+#### 🔐 Operational Security & Asset Disclosures
+- **Internal Security Matrix:** Complete documentation regarding state variable safety, reentrancy counters, and administrative modifier privileges is actively maintained in our root [SECURITY.md](./SECURITY.md) file.
+- **Mentor Security Clearance Link:** `[PASTE_YOUR_MENTOR_APPROVAL_OR_REVIEW_ISSUE_LINK_HERE]`
+- **User Operations Manual:** Explicit, step-by-step non-technical onboarding guidelines, funding paths, and wallet connection troubleshooting steps are fully cataloged in our root [USER_GUIDE.md](./USER_GUIDE.md) directory.
+
+### ⚙️ Production Quickstart & Installation
+
+```bash
+git clone https://github.com/JerryIdoko/stellar-green-belt-mvp.git
+cd stellar-green-belt-mvp
+npm install
+npm run dev
+```
+
+---
+
+## 🎯 Level 7 Founder Belt — Growth Operations
+
+A dedicated growth intelligence workspace has been initialized at [`./growth_ops/`](./growth_ops/). This directory houses our monthly growth tracking, KPI dashboards, and retention analytics framework.
+
+See [`./growth_ops/GROWTH_REPORT.md`](./growth_ops/GROWTH_REPORT.md) for the current month's performance dashboard.
 
 ---
 
