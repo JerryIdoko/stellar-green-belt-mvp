@@ -15,10 +15,11 @@ import { FreighterModule } from "@creit.tech/stellar-wallets-kit/modules/freight
 import { xBullModule } from "@creit.tech/stellar-wallets-kit/modules/xbull";
 import { AlbedoModule } from "@creit.tech/stellar-wallets-kit/modules/albedo";
 import { Client, networks } from "@/contracts/crowdfund-client";
-import type { CampaignState, TxState } from "@/types";
+import type { CampaignState, TxState, TransactionRecord } from "@/types";
 import { UserRejected, InsufficientFunds } from "@/utils/errors";
 import { trackEvent } from "@/utils/analytics";
 import { RPC_URL, CONTRACT_ID, CACHE_KEY, CACHE_TTL_MS } from "@/utils/config";
+import { loadTxHistory, saveTxRecord } from "@/components/TransactionHistory";
 
 const MODULES = [new FreighterModule(), new xBullModule(), new AlbedoModule()];
 
@@ -41,6 +42,7 @@ export interface CrowdfundContextValue {
   resetTx: () => void;
   showOnboarding: boolean;
   dismissOnboarding: () => void;
+  txRecords: TransactionRecord[];
 }
 
 const CrowdfundContext = createContext<CrowdfundContextValue | null>(null);
@@ -79,6 +81,7 @@ export function CrowdfundProvider({ children }: { children: ReactNode }) {
     error: null,
   });
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [txRecords, setTxRecords] = useState<TransactionRecord[]>(loadTxHistory);
   const clientRef = useRef<Client | null>(null);
   const kitInitRef = useRef(false);
 
@@ -182,6 +185,9 @@ export function CrowdfundProvider({ children }: { children: ReactNode }) {
 
         setTxState({ status: "success", hash, error: null });
         trackEvent("Transaction Success", { hash, amount });
+        const confirmedTx: TransactionRecord = { hash, amount, status: "confirmed", timestamp: Date.now() };
+        saveTxRecord(confirmedTx);
+        setTxRecords(loadTxHistory());
         await refreshCampaign();
       } catch (err: unknown) {
         let mapped: Error;
@@ -218,6 +224,15 @@ export function CrowdfundProvider({ children }: { children: ReactNode }) {
 
         setTxState({ status: "failure", hash: null, error: mapped.message });
         trackEvent("Transaction Failure", { error: mapped.message, amount });
+        const failedTx: TransactionRecord = {
+          hash: "pending",
+          amount,
+          status: "failed",
+          timestamp: Date.now(),
+          error: mapped.message,
+        };
+        saveTxRecord(failedTx);
+        setTxRecords(loadTxHistory());
       }
     },
     [address, refreshCampaign]
@@ -243,6 +258,7 @@ export function CrowdfundProvider({ children }: { children: ReactNode }) {
         resetTx,
         showOnboarding,
         dismissOnboarding,
+        txRecords,
       }}
     >
       {children}
