@@ -18,12 +18,9 @@ import { Client, networks } from "@/contracts/crowdfund-client";
 import type { CampaignState, TxState } from "@/types";
 import { UserRejected, InsufficientFunds } from "@/utils/errors";
 import { trackEvent } from "@/utils/analytics";
+import { RPC_URL, CONTRACT_ID, CACHE_KEY, CACHE_TTL_MS } from "@/utils/config";
 
 const MODULES = [new FreighterModule(), new xBullModule(), new AlbedoModule()];
-const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || "https://soroban-testnet.stellar.org";
-const CONTRACT_ID = process.env.NEXT_PUBLIC_CONTRACT_ID || networks.testnet.contractId;
-const CACHE_KEY = "crowdfund_campaign";
-const CACHE_TTL_MS = 5 * 60 * 1000;
 
 interface CachedCampaign {
   data: CampaignState;

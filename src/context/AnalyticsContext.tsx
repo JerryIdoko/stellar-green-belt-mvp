@@ -2,14 +2,13 @@
 
 import { createContext, useContext, useEffect, type ReactNode } from "react";
 import { trackEvent, type EventName } from "@/utils/analytics";
+import { POSTHOG_KEY } from "@/utils/config";
 
 export interface AnalyticsContextValue {
   track: (name: EventName, properties?: Record<string, unknown>) => void;
 }
 
 const AnalyticsContext = createContext<AnalyticsContextValue | null>(null);
-
-const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 
 export function AnalyticsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -21,7 +20,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       script.async = true;
       script.onload = () => {
         const ph = window.posthog as never as { init: (key: string, config: object) => void } | undefined;
-        if (ph) {
+        if (ph && POSTHOG_KEY) {
           ph.init(POSTHOG_KEY, { api_host: "https://app.posthog.com" });
         }
       };
