@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { TxStatus } from "@/types";
+import { validateContributionAmount } from "@/utils/validators";
 
 interface ContributeFormProps {
   txStatus: TxStatus;
@@ -18,12 +19,19 @@ const STATUS_LABELS: Record<TxStatus, string | null> = {
 
 export default function ContributeForm({ txStatus, onContribute }: ContributeFormProps) {
   const [amount, setAmount] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const isPending = txStatus === "awaiting_approval" || txStatus === "validating" || submitting;
   const statusLabel = STATUS_LABELS[txStatus];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    const validation = validateContributionAmount(amount);
+    if (!validation.valid) {
+      setError(validation.error ?? "Invalid amount");
+      return;
+    }
     const parsed = parseInt(amount, 10);
     if (isNaN(parsed) || parsed <= 0 || submitting) return;
     setSubmitting(true);
@@ -46,6 +54,12 @@ export default function ContributeForm({ txStatus, onContribute }: ContributeFor
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
           {statusLabel}
+        </div>
+      )}
+
+      {error && (
+        <div className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
         </div>
       )}
 
