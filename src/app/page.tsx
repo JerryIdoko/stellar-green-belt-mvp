@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useCrowdfund } from "@/context/CrowdfundContext";
+import { useCampaign } from "@/hooks/useCampaign";
+import { truncateAddress } from "@/utils/format";
 import WalletModal from "@/components/WalletModal";
 import ProgressBar from "@/components/ProgressBar";
 import CountdownTimer from "@/components/CountdownTimer";
@@ -12,14 +14,13 @@ import FeedbackWidget from "@/components/FeedbackWidget";
 import CampaignSkeleton from "@/components/CampaignSkeleton";
 import TransactionHistory from "@/components/TransactionHistory";
 import ErrorBanner from "@/components/ErrorBanner";
+import { EmptyState } from "@/components/EmptyState";
 
 export default function Home() {
   const {
     address,
     handleConnected,
     disconnectWallet,
-    campaign,
-    campaignLoading,
     txState,
     explorerUrl,
     contribute,
@@ -27,20 +28,10 @@ export default function Home() {
     resetTx,
     showOnboarding,
     dismissOnboarding,
-    txRecords,
   } = useCrowdfund();
 
+  const { campaign, loading: campaignLoading, progress, txRecords } = useCampaign();
   const [modalOpen, setModalOpen] = useState(false);
-
-  const handleConnect = useCallback(
-    (addr: string) => {
-      handleConnected(addr);
-    },
-    [handleConnected],
-  );
-
-  const formatAddress = (addr: string) =>
-    `${addr.slice(0, 6)}...${addr.slice(-4)}`;
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-6 sm:py-10">
@@ -52,7 +43,7 @@ export default function Home() {
         {address ? (
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <span className="rounded-full bg-indigo-100 px-3 py-1.5 font-mono text-xs text-indigo-700 sm:text-sm">
-              {formatAddress(address)}
+              {truncateAddress(address)}
             </span>
             <button
               onClick={disconnectWallet}
@@ -140,7 +131,7 @@ export default function Home() {
       <WalletModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        onConnect={handleConnect}
+        onConnect={handleConnected}
       />
 
       <OnboardingModal
