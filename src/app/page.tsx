@@ -88,6 +88,12 @@ export default function Home() {
         <CampaignSkeleton />
       ) : campaign ? (
         <div className="space-y-4 sm:space-y-6">
+          {campaign.isClaimed && (
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-center text-sm text-amber-800">
+              This campaign has been claimed. Contributions are closed.
+            </div>
+          )}
+
           <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
             <ProgressBar current={campaign.totalRaised} target={campaign.target} />
           </div>
