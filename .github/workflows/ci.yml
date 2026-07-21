@@ -16,7 +16,7 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-unknown-unknown
+          targets: wasm32v1-none
 
       - name: Run Cargo Tests
         run: |
@@ -26,7 +26,7 @@ jobs:
       - name: Build Contract WASM
         run: |
           cd contracts/soroban-mvp
-          cargo build --target wasm32-unknown-unknown --release
+          cargo build --target wasm32v1-none --release
 
   build-frontend:
     name: Build & Test Frontend
@@ -38,13 +38,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - name: Install Frontend Dependencies
-        run: npm ci || npm install
+        run: npm install
 
       - name: Build Frontend Application
         run: npm run build
         env:
           NEXT_PUBLIC_RPC_URL: https://soroban-testnet.stellar.org
           NEXT_PUBLIC_CONTRACT_ID: CCLJ4FEXKXEZKS6UCROBEKLIVDOPFVP6Z75QS3AV5CUS2WAM3EBQNL7W
+          NEXT_PUBLIC_NETWORK: testnet
