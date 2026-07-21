@@ -8,3 +8,7 @@ temp-next/
 *.log
 .DS_Store
 dist/
+target/
+contracts/soroban-mvp/target/
+test_snapshots/
+contracts/soroban-mvp/test_snapshots/
